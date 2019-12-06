@@ -45,7 +45,7 @@ def send_message(webhook, challenge_changes, leaderboard_changes):
         "elements": [
             {
                 "type": "mrkdwn",
-                "text": "*AOC2019 Leaderboard* | <https://adventofcode.com/2019/leaderboard/private/view/671004|view here>"
+                "text": "*AOC2019 Leaderboard* | <https://adventofcode.com/2019/leaderboard/private/view/671004|view>"
             }
         ]
     })
