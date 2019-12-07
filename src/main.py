@@ -21,7 +21,7 @@ def format_complete_chal_message(challenge):
     
     return f"*{challenge['username']}* has completed {star} *Day {challenge['day']}* ({challenge['part']}) at {timestamp.strftime('%H:%M:%S')}!"
 
-def send_message(webhook, challenge_changes, leaderboard_changes):
+def send_message(webhook, challenge_changes, leaderboard_changes, board_id):
     blocks = []
     for challenge_change in challenge_changes:
         blocks.append({
@@ -44,8 +44,13 @@ def send_message(webhook, challenge_changes, leaderboard_changes):
         "type": "context",
         "elements": [
             {
+                "type": "image",
+                "image_url": "https://adventofcode.com/favicon.png",
+                "alt_text": "Advent of Code"
+            },
+            {
                 "type": "mrkdwn",
-                "text": "*AOC2019 Leaderboard* | <https://adventofcode.com/2019/leaderboard/private/view/671004|view>"
+                "text": "*AoC 2019 Leaderboard* | <https://adventofcode.com/2019/leaderboard/private/view/{board_id}|view>"
             }
         ]
     })
@@ -146,7 +151,7 @@ def run(board_id, session, slack_hook):
     write_old_leaderboard(new_leaderboard, OLD_LEADERBOARD)
     (challenge_changes, leaderboard_changes) = extract_changes(old_leaderboard, new_leaderboard)
     if challenge_changes:
-        send_message(slack_hook, challenge_changes, leaderboard_changes)
+        send_message(slack_hook, challenge_changes, leaderboard_changes, board_id)
 
 session = os.environ['AOC_SESSION']
 aoc_board_id = os.environ['AOC_BOARD']
