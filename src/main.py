@@ -50,7 +50,7 @@ def send_message(webhook, challenge_changes, leaderboard_changes, board_id):
             },
             {
                 "type": "mrkdwn",
-                "text": "AoC 2019 Leaderboard | <https://adventofcode.com/2019/leaderboard/private/view/{board_id}|view>"
+                "text": f"AoC 2019 Leaderboard | <https://adventofcode.com/2019/leaderboard/private/view/{board_id}|view>"
             }
         ]
     })
