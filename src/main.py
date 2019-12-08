@@ -118,6 +118,10 @@ def collect_leaderboard_changes(old_leaderboard, new_leaderboard):
         if old_info['position'] == new_info['position']:
             continue
 
+        # If there is a draw, the leaderboard position doesn't change, regardless of alphabetical order etc
+        if any([other_id != id and other_info['points'] == new_info['points'] for (other_id, other_info) in new_positions.items()]):
+            continue
+
         changes.append({
             'username': new_info['username'],
             'position': new_info['position'],
