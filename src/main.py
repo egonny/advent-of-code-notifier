@@ -142,7 +142,7 @@ def collect_leaderboard_changes(old_leaderboard, new_leaderboard):
 def create_positions(leaderboard):
     positions = {}
     position = 1
-    for (id, member) in sorted(leaderboard['members'].items(), key=lambda x: (x[1]['local_score'], -x[1]['last_star_ts']), reverse=True):
+    for (id, member) in sorted(leaderboard['members'].items(), key=lambda x: (x[1]['local_score'], -int(x[1]['last_star_ts'])), reverse=True):
         positions[id] = {
             'username': member['name'],
             'position': position,
