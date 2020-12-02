@@ -53,7 +53,7 @@ def send_message(webhook, challenge_changes, leaderboard_changes, board_id):
             },
             {
                 "type": "mrkdwn",
-                "text": f"AoC 2019 Leaderboard | <https://adventofcode.com/2019/leaderboard/private/view/{board_id}|view>"
+                "text": f"AoC 2020 Leaderboard | <https://adventofcode.com/2020/leaderboard/private/view/{board_id}|view>"
             }
         ]
     })
@@ -72,7 +72,7 @@ def send_message(webhook, challenge_changes, leaderboard_changes, board_id):
 
 def get_leaderboard(id, session):
     response = requests.get(
-        f"https://adventofcode.com/2019/leaderboard/private/view/{id}.json", headers={"cookie": f"session={session}"})
+        f"https://adventofcode.com/2020/leaderboard/private/view/{id}.json", headers={"cookie": f"session={session}"})
     if response.status_code != 200:
         raise ValueError(
             f"Request to AOC returned an error {response.status_code}, the response is:\n{response.text}"
