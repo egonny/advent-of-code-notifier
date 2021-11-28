@@ -9,8 +9,8 @@ OLD_LEADERBOARD = 'old_leaderboard.json'
 
 session = os.environ['AOC_SESSION']
 board_id = os.environ['AOC_BOARD']
-slack_hook = os.environ['AOC_SLACK_HOOK']
-discord_hook = os.environ['AOC_DISCORD_HOOK']
+slack_hook = os.environ.get('AOC_SLACK_HOOK')
+discord_hook = os.environ.get('AOC_DISCORD_HOOK')
 
 new_leaderboard = get_leaderboard(board_id, session)
 try:
@@ -24,6 +24,7 @@ write_old_leaderboard(new_leaderboard, OLD_LEADERBOARD)
 (challenge_changes, leaderboard_changes) = extract_changes(
     old_leaderboard, new_leaderboard)
 if challenge_changes:
+    print("Found changes! Informing webhooks")
     formatted_changes = format_changes(
         challenge_changes, leaderboard_changes, board_id)
     if slack_hook:
