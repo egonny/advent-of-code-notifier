@@ -5,33 +5,26 @@ import requests
 from .formatter import *
 
 
-def send_slack_message(webhook, formatted_changes):
-    pass
-
-
-def send_discord_message(webhook, formatted_changes):
-    pass
-
-
-def send_message(webhook, challenge_changes, leaderboard_changes, board_id):
+def send_slack_message(webhook: str, formatted_message: FormattedMessage):
     blocks = []
-    for challenge_change in challenge_changes:
+    for challenge_message in formatted_message.challenge_messages:
         blocks.append({
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": format_complete_chal_message(challenge_change)
+                "text": challenge_message
             }
         })
 
-    if leaderboard_changes:
+    for leaderboard_message in formatted_message.leaderboard_messages:
         blocks.append({
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": format_leaderboard_changes(leaderboard_changes)
+                "text": leaderboard_message
             }
         })
+
     blocks.append({
         "type": "context",
         "elements": [
@@ -42,12 +35,11 @@ def send_message(webhook, challenge_changes, leaderboard_changes, board_id):
             },
             {
                 "type": "mrkdwn",
-                "text": f"AoC 2020 Leaderboard | <https://adventofcode.com/2020/leaderboard/private/view/{board_id}|view>"
+                "text": f"AoC 2021 Leaderboard | <https://adventofcode.com/2021/leaderboard/private/view/{formatted_message.board_id}|view>"
             }
         ]
     })
 
-    print(json.dumps({"blocks": blocks}))
     response = requests.post(
         webhook,
         data=json.dumps({"blocks": blocks}),
@@ -57,3 +49,9 @@ def send_message(webhook, challenge_changes, leaderboard_changes, board_id):
         raise ValueError(
             f"Request to Slack returned an error {response.status_code}, the response is:\n{response.text}"
         )
+    else:
+        print("Slack notified!")
+
+
+def send_discord_message(webhook: str, formatted_changes: FormattedMessage):
+    pass
