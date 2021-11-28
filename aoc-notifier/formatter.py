@@ -25,6 +25,5 @@ def format_leaderboard_change(change) -> str:
 
 
 def format_changes(challenge_changes, leaderboard_changes, board_id) -> FormattedMessage:
-    FormattedMessage([format_challenge_message(change) for change in challenge_changes], [
-                     format_leaderboard_change(change) for change in leaderboard_changes], board_id)
-    pass
+    return FormattedMessage([format_challenge_message(change) for change in challenge_changes], [
+        format_leaderboard_change(change) for change in leaderboard_changes], board_id)
