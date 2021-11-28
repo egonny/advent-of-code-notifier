@@ -75,7 +75,6 @@ def send_discord_message(webhook: str, formatted_message: FormattedMessage):
     }
 
     response = requests.post(webhook, json={"embeds": [embed]})
-    print(response.request.body)
     if response.status_code > 299:
         raise ValueError(
             f"Request to Discord returned an error {response.status_code}, the response is:\n{response.text}"
