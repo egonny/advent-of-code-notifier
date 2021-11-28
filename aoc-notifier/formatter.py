@@ -18,3 +18,7 @@ def format_complete_chal_message(challenge):
     timestamp = datetime.datetime.fromtimestamp(challenge['timestamp'])
 
     return f"*{challenge['username']}* has completed {star} *Day {challenge['day']}* ({challenge['part']}) at {timestamp.strftime('%H:%M:%S')}!"
+
+
+def format_changes(challenge_changes, leaderboard_changes):
+    pass

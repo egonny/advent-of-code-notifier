@@ -5,6 +5,14 @@ import requests
 from .formatter import *
 
 
+def send_slack_message(webhook, formatted_changes):
+    pass
+
+
+def send_discord_message(webhook, formatted_changes):
+    pass
+
+
 def send_message(webhook, challenge_changes, leaderboard_changes, board_id):
     blocks = []
     for challenge_change in challenge_changes:

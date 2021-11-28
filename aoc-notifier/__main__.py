@@ -1,4 +1,5 @@
 import os
+import sys
 
 from .leaderboard import *
 from .webhook import *
@@ -6,24 +7,26 @@ from .webhook import *
 OLD_LEADERBOARD = 'old_leaderboard.json'
 
 
-def run_changes(board_id, session, slack_hook):
-    new_leaderboard = get_leaderboard(board_id, session)
-    try:
-        old_leaderboard = read_old_leaderboard(OLD_LEADERBOARD)
-    except:
-        print("No old leaderboard found, saving new leaderboard and quitting.")
-        write_old_leaderboard(new_leaderboard, OLD_LEADERBOARD)
-        return
-    write_old_leaderboard(new_leaderboard, OLD_LEADERBOARD)
-    (challenge_changes, leaderboard_changes) = extract_changes(
-        old_leaderboard, new_leaderboard)
-    if challenge_changes:
-        send_message(slack_hook, challenge_changes,
-                     leaderboard_changes, board_id)
-
-
 session = os.environ['AOC_SESSION']
-aoc_board_id = os.environ['AOC_BOARD']
-slack_webhook = os.environ['AOC_SLACK_HOOK']
+board_id = os.environ['AOC_BOARD']
+slack_hook = os.environ['AOC_SLACK_HOOK']
+discord_hook = os.environ['AOC_DISCORD_HOOK']
 
-run_changes(aoc_board_id, session, slack_webhook)
+new_leaderboard = get_leaderboard(board_id, session)
+try:
+    old_leaderboard = read_old_leaderboard(OLD_LEADERBOARD)
+except:
+    print("No old leaderboard found, saving new leaderboard and quitting.")
+    write_old_leaderboard(new_leaderboard, OLD_LEADERBOARD)
+    sys.exit(1)
+
+write_old_leaderboard(new_leaderboard, OLD_LEADERBOARD)
+(challenge_changes, leaderboard_changes) = extract_changes(
+    old_leaderboard, new_leaderboard)
+if challenge_changes:
+    formatted_changes = format_changes(
+        challenge_changes, leaderboard_changes, board_id)
+    if slack_hook:
+        send_slack_message(slack_hook, formatted_changes)
+    if discord_hook:
+        send_discord_message(discord_hook, formatted_changes)
