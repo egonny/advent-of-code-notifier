@@ -21,7 +21,7 @@ def format_challenge_message(challenge) -> str:
 
 
 def format_leaderboard_change(change) -> str:
-    return f"{':arrow_up:' if change['positive'] else ':arrow_down:'} *{INFLECT.ordinal(change['position'])}* {change['username']} ({change['points']} points)\n"
+    return f"{':arrow_up:' if change['positive'] else ':arrow_down:'} *{INFLECT.ordinal(change['position'])}* {change['username']} ({change['points']} points)"
 
 
 def format_changes(challenge_changes, leaderboard_changes, board_id) -> FormattedMessage:
