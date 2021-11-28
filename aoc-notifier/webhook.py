@@ -1,5 +1,3 @@
-import json
-
 import requests
 
 from .formatter import *
@@ -44,8 +42,7 @@ def send_slack_message(webhook: str, formatted_message: FormattedMessage):
 
     response = requests.post(
         webhook,
-        data=json.dumps({"blocks": blocks}),
-        headers={'Content-Type': 'application/json'}
+        json={"blocks": blocks},
     )
     if response.status_code != 200:
         raise ValueError(
