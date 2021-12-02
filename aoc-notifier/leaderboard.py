@@ -63,6 +63,9 @@ def collect_leaderboard_changes(old_leaderboard, new_leaderboard):
         if old_info['position'] == new_info['position']:
             continue
 
+        if new_info['points'] == 0:
+            continue
+
         changes.append({
             'username': new_info['username'],
             'position': new_info['position'],
