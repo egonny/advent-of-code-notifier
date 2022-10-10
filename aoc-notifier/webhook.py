@@ -1,5 +1,6 @@
 import requests
 
+from . import YEAR
 from .formatter import *
 
 DISCORD_SIDE_COLOR = 0x04450c
@@ -35,7 +36,7 @@ def send_slack_message(webhook: str, formatted_message: FormattedMessage):
             },
             {
                 "type": "mrkdwn",
-                "text": f"AoC 2021 Leaderboard | <https://adventofcode.com/2021/leaderboard/private/view/{formatted_message.board_id}|view>"
+                "text": f"AoC {YEAR} Leaderboard | <https://adventofcode.com/{YEAR}/leaderboard/private/view/{formatted_message.board_id}|view>"
             }
         ]
     })
@@ -65,11 +66,11 @@ def send_discord_message(webhook: str, formatted_message: FormattedMessage):
 
     embed = {
         "title": "<a:pepechristmashype:914628245046054934> Advent of Code update <a:pepechristmashype:914628245046054934>",
-        "url": f"https://adventofcode.com/2021/leaderboard/private/view/{formatted_message.board_id}",
+        "url": f"https://adventofcode.com/{YEAR}/leaderboard/private/view/{formatted_message.board_id}",
         "color": DISCORD_SIDE_COLOR,
         "footer": {
             "icon_url": "https://adventofcode.com/favicon.png",
-            "text": "AoC 2021"
+            "text": f"AoC {YEAR}"
         },
         "fields": fields
     }

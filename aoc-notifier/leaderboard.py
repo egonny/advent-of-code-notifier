@@ -1,11 +1,12 @@
 import json
 import requests
-import json
+
+from . import YEAR
 
 
 def get_leaderboard(id, session):
     response = requests.get(
-        f"https://adventofcode.com/2021/leaderboard/private/view/{id}.json", headers={"cookie": f"session={session}"})
+        f"https://adventofcode.com/{YEAR}/leaderboard/private/view/{id}.json", headers={"cookie": f"session={session}"})
     if response.status_code != 200:
         raise ValueError(
             f"Request to AOC returned an error {response.status_code}, the response is:\n{response.text}"
