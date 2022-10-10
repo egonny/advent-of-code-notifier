@@ -1,6 +1,5 @@
 import json
 import requests
-import json
 
 
 def get_leaderboard(id, session):
